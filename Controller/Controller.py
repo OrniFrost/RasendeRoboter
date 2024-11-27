@@ -3,7 +3,7 @@ import random
 from Model.Cell import Cell
 from Model.Grid import Grid
 from Model.Pawn import Pawn
-from View.View import GridView
+from View.GridView import GridView
 
 items_list = [
     ("blue", "circle"),
@@ -170,3 +170,15 @@ class Controller:
 
     def test_button(self):
         print("okay lezgo")
+        new_cell = random.choice(random.choice(self.grid.cells))
+        print(new_cell)
+        pawn = random.choice(self.grid.pawns)
+        self.move_pawn(pawn, new_cell)
+
+    def move_pawn(self, pawn: Pawn, dest_cell: Cell):
+        old_cell = pawn.cell
+        pawn.cell = dest_cell
+        self.view.move_pawn(old_cell,pawn)
+
+
+
