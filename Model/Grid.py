@@ -1,3 +1,5 @@
+from multiprocessing.reduction import duplicate
+
 from Model import Cell, Pawn
 
 
@@ -22,3 +24,24 @@ class Grid:
                 cell.col = j
                 row.append(cell)
             self.cells.append(row)
+
+        self.double_walls()
+
+    def double_walls(self):
+        for i in range(len(self.cells)):
+            for j in range(len(self.cells)):
+                #Check North
+                if i != 0 and self.cells[i][j].walls['N']:
+                    self.cells[i - 1][j].walls['S'] = True
+
+                # Check East
+                if j != 15 and self.cells[i][j].walls['E']:
+                    self.cells[i][j + 1].walls['W'] = True
+
+                # Check South
+                if i != 15 and self.cells[i][j].walls['S']:
+                    self.cells[i + 1][j].walls['N'] = True
+
+                # Check West
+                if j != 0 and self.cells[i][j].walls['W']:
+                    self.cells[i][j - 1].walls['E'] = True

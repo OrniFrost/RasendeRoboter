@@ -33,6 +33,8 @@ class Controller:
             self.tiles[i] = self.rotate_tile_clockwise(self.tiles[i], i)
         self.grid = Grid(self.tiles[0], self.tiles[1], self.tiles[2], self.tiles[3])
 
+
+
         colors_list = ["blue","green","red","yellow"]
         pawns_list = []
         [pawns_list.append(Pawn(colors_list.pop(0),cell)) for cell in self.find_random_cells_starts_for_pawns()]
@@ -169,9 +171,7 @@ class Controller:
         return cells_list
 
     def test_button(self):
-        print("okay lezgo")
         new_cell = random.choice(random.choice(self.grid.cells))
-        print(new_cell)
         pawn = random.choice(self.grid.pawns)
         self.move_pawn(pawn, new_cell)
 
@@ -179,6 +179,3 @@ class Controller:
         old_cell = pawn.cell
         pawn.cell = dest_cell
         self.view.move_pawn(old_cell,pawn)
-
-
-
