@@ -1,6 +1,10 @@
+from Model import Cell, Pawn
+
+
 class Grid:
     def __init__(self, tile_1, tile_2, tile_3, tile_4):
-        self.cells = []
+        self.cells: [[Cell]] = []
+        self.pawns: [Pawn] = None
         for i in range(16):
             row = []
             for j in range(16):

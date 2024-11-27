@@ -2,6 +2,7 @@ import random
 
 from Model.Cell import Cell
 from Model.Grid import Grid
+from Model.Pawn import Pawn
 from View.View import GridView
 
 items_list = [
@@ -31,6 +32,12 @@ class Controller:
         for i in range(1, 4):
             self.tiles[i] = self.rotate_tile_clockwise(self.tiles[i], i)
         self.grid = Grid(self.tiles[0], self.tiles[1], self.tiles[2], self.tiles[3])
+
+        colors_list = ["blue","green","red","yellow"]
+        pawns_list = []
+        [pawns_list.append(Pawn(colors_list.pop(0),cell)) for cell in self.find_random_cells_starts_for_pawns()]
+        self.grid.pawns = pawns_list
+
         self.view.draw_grid(self.grid)
 
     def create_tile(self, size):
@@ -144,6 +151,22 @@ class Controller:
                     new_tile[j][new_col_index].item = tile[row][col].item
             tile = new_tile
         return tile
+
+    def find_random_cells_starts_for_pawns(self) -> [Cell]:
+        cells_list: [Cell] = []
+        while len(cells_list) != 4:
+            row,col = random.randint(0,15), random.randint(0,15)
+            middle = [7,8]
+            if row not in middle and col not in middle:
+                if self.grid.cells[row][col].item == (None,None):
+                    is_okay = True
+                    for cell in cells_list :
+                        r,c = cell.row, cell.col
+                        if row == r and col == c:
+                            is_okay = False
+                    if is_okay:
+                        cells_list.append(self.grid.cells[row][col])
+        return cells_list
 
     def test_button(self):
         print("okay lezgo")
