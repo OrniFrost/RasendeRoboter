@@ -33,7 +33,7 @@ class GridView:
                 cell = grid.cells[i][j]
                 cell_view = CellView(self.grid_frame, cell)
                 cell_view.draw()
-                cell_view.canvas.bind('<Button-1>', lambda event, text=(cell.row, cell.col): print(text))
+                cell_view.canvas.bind('<Button-1>', lambda event, cell_clicked = cell: self.controller.click_on_cell(cell_clicked))
 
                 row_view.append(cell_view)
             self.grid_cells_view.append(row_view)
@@ -53,3 +53,9 @@ class GridView:
 
         self.draw_pawn(pawn)
 
+    def update_cells(self, cells_list: [Cell]):
+        for cell in cells_list:
+            self.update_cell(cell)
+
+    def update_cell(self,cell: Cell):
+        self.grid_cells_view[cell.row][cell.col].draw()

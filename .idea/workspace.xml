@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="Visual deplacement of Pawns">
+    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="Wall doubling for easier moves">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/Grid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Grid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Cell.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Cell.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/CellView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/CellView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/GridView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/GridView.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +114,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732280081938</updated>
-      <workItem from="1732280096212" duration="58046000" />
+      <workItem from="1732280096212" duration="72176000" />
     </task>
     <task id="LOCAL-00001" summary="inital commit">
       <option name="closed" value="true" />
@@ -146,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732711315314</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Wall doubling for easier moves">
+      <option name="closed" value="true" />
+      <created>1732718760923</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732718760923</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,9 +178,10 @@
     <MESSAGE value="Generation dynamically of the grid + MVC" />
     <MESSAGE value="Initialisation of pawns" />
     <MESSAGE value="Visual deplacement of Pawns" />
-    <option name="LAST_COMMIT_MESSAGE" value="Visual deplacement of Pawns" />
+    <MESSAGE value="Wall doubling for easier moves" />
+    <option name="LAST_COMMIT_MESSAGE" value="Wall doubling for easier moves" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1732718532962" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1732982754484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

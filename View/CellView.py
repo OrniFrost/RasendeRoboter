@@ -3,8 +3,9 @@ import tkinter as tk
 from tkinter import ttk
 
 class CellView:
-    polygon_pawn = [9,44,13,39,11,34,8,31,8,27,11,24,15,21,13,18,11,16,10,14,10,10,12,7,15,5,19,3,
-                    30,3,34,5,37,7,39,10,39,14,38,16,36,18,34,21,38,24,41,27,41,31,38,34,36,39,38,44]
+    polygon_pawn = [9, 46, 13, 41, 11, 36, 8, 33, 8, 29, 11, 26, 15, 23, 13, 20, 11, 18, 10, 16, 10, 12, 12, 9, 15, 7,
+                    19, 5, 30, 5, 34, 7, 37, 9, 39, 12, 39, 16, 38, 18, 36, 20, 34, 23, 38, 26, 41, 29, 41, 33, 38, 36,
+                    36, 41, 38, 46]
 
     def __init__(self, parent, cell):
         self.cell = cell
@@ -16,7 +17,8 @@ class CellView:
 
     def draw(self):
         self.canvas.delete("all")  # Clear the canvas
-        self.canvas.create_rectangle(0, 0, 50, 50, width=0.1)
+        color = "light green" if self.cell.is_highlight else "white"
+        self.canvas.create_rectangle(0, 0, 50, 50, width=0.1, fill=color)
         walls = self.cell.walls
         if walls['N']:
             self.canvas.create_line(0, 0, 50, 0, width=5)
