@@ -130,7 +130,7 @@ class Controller:
         tile[6][2].walls['E'] = True
         tile[6][3].walls['S'] = True
 
-        tile[1][4].item = items_list[5]
+        tile[1][4].item = items_list[4]
         tile[2][1].item = items_list[14]
         tile[3][6].item = items_list[11]
         tile[6][3].item = items_list[1]
