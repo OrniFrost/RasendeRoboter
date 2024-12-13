@@ -3,6 +3,7 @@ import random
 from Model.Cell import Cell
 from Model.Grid import Grid
 from Model.Pawn import Pawn
+from View.GridView import GridView
 
 items_list = [
     ("blue", "circle"),
@@ -24,13 +25,15 @@ items_list = [
 ]
 
 class BoardController:
-    def __init__(self):
+    def __init__(self, root):
         self.tiles = [self.build_tile_1(), self.build_tile_2(), self.build_tile_3(), self.build_tile_4()]
         random.shuffle(self.tiles)
         for i in range(1, 4):
             self.tiles[i] = self.rotate_tile_clockwise(self.tiles[i], i)
         self.grid = Grid(self.tiles[0], self.tiles[1], self.tiles[2], self.tiles[3])
         self.grid.pawns = self.create_pawns()
+        self.view = GridView(root, None)  # Initialize GridView without a controller
+        self.view.draw_grid(self.grid)
 
     def create_tile(self, size):
         tile = []

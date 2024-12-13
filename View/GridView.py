@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+from Controller.BaseActionController import BaseActionController
 from Model.Cell import Cell
 from Model.Pawn import Pawn
 from View.CellView import CellView
@@ -19,9 +20,6 @@ class GridView:
 
         self.buttons_frame = ttk.Frame(self.main_frame)
         self.buttons_frame.grid(row=0, column=1, padx=5, pady=5, sticky=tk.N)
-
-        self.button_test = ttk.Button(self.buttons_frame, text="Test", command=self.controller.test_button)
-        self.button_test.grid(row=0, column=0)
 
         self.grid_cells_view: [[CellView]] = []
 
@@ -59,3 +57,7 @@ class GridView:
 
     def update_cell(self,cell: Cell):
         self.grid_cells_view[cell.row][cell.col].draw()
+
+    def instanciate_buttons(self, controller : BaseActionController):
+        self.button_test = ttk.Button(self.buttons_frame, text="Test", command=self.controller.test_button)
+        self.button_test.grid(row=0, column=0)
