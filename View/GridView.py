@@ -60,4 +60,17 @@ class GridView:
 
     def instanciate_buttons(self, controller : BaseActionController):
         self.button_test = ttk.Button(self.buttons_frame, text="Test", command=self.controller.test_button)
-        self.button_test.grid(row=0, column=0)
+        self.button_test.grid(row=4, column=0)
+
+        self.round_number_label = ttk.Label(self.buttons_frame, text="Round Number: 1")
+        self.round_number_label.grid(row=0, column=0, pady=5)
+
+        self.player_points_label = ttk.Label(self.buttons_frame, text="Player: 0")
+        self.player_points_label.grid(row=1, column=1, pady=5)
+
+        self.ai_points_label = ttk.Label(self.buttons_frame, text="AI: 0")
+        self.ai_points_label.grid(row=1, column=0, pady=5)
+
+        self.turn_label = ttk.Label(self.buttons_frame, text="Turn: Player")
+        self.turn_label.grid(row=3, column=0, pady=5)
+

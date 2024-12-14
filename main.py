@@ -1,5 +1,6 @@
 import tkinter as tk
 from Controller.BoardController import BoardController
+from Controller.GameController import GameController
 from Controller.PlayerController import PlayerController
 from Controller.AIController import AIController
 
@@ -11,5 +12,7 @@ if __name__ == '__main__':
     view = board_controller.view
     player_controller = PlayerController(board_controller.grid, view)
     ai_controller = AIController(board_controller.grid, view)
+
+    game_controller = GameController(root,view,player_controller,ai_controller)
 
     root.mainloop()

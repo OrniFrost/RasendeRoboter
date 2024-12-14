@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="Separation of the controller">
-      <change afterPath="$PROJECT_DIR$/Controller/AIController.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controller/BaseActionController.py" afterDir="false" />
+    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="More respect for mvc struct">
       <change afterPath="$PROJECT_DIR$/Controller/GameController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/BoardController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/BoardController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/PlayerController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/PlayerController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/View/GridView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/GridView.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -123,7 +119,7 @@
       <workItem from="1732280096212" duration="38692000" />
       <workItem from="1733738779295" duration="12103000" />
       <workItem from="1734076798174" duration="11000" />
-      <workItem from="1734082328167" duration="2776000" />
+      <workItem from="1734082328167" duration="8507000" />
     </task>
     <task id="LOCAL-00001" summary="inital commit">
       <option name="closed" value="true" />
@@ -157,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733910483626</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="More respect for mvc struct">
+      <option name="closed" value="true" />
+      <created>1734085269855</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1734085269855</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,9 +183,10 @@
     <MESSAGE value="Merge commit" />
     <MESSAGE value="Little fix, there was 2 red squares and no red circle" />
     <MESSAGE value="Separation of the controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="Separation of the controller" />
+    <MESSAGE value="More respect for mvc struct" />
+    <option name="LAST_COMMIT_MESSAGE" value="More respect for mvc struct" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1734084865675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1734219800223" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
