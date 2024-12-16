@@ -5,24 +5,7 @@ from Model.Grid import Grid
 from Model.Pawn import Pawn
 from View.GridView import GridView
 
-items_list = [
-    ("blue", "circle"),
-    ("blue", "square"),
-    ("blue", "triangle"),
-    ("blue", "star"),
-    ("red", "circle"),
-    ("red", "square"),
-    ("red", "triangle"),
-    ("red", "star"),
-    ("yellow", "circle"),
-    ("yellow", "square"),
-    ("yellow", "triangle"),
-    ("yellow", "star"),
-    ("green", "circle"),
-    ("green", "square"),
-    ("green", "triangle"),
-    ("green", "star")
-]
+from constants import items_list
 
 class BoardController:
     def __init__(self, root):

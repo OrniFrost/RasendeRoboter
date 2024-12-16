@@ -45,3 +45,10 @@ class Grid:
                 # Check West
                 if j != 0 and self.cells[i][j].walls['W']:
                     self.cells[i][j - 1].walls['E'] = True
+
+    def find_cell_of_target(self, target: (str,str)):
+        for i in range(len(self.cells)):
+            for j in range(len(self.cells)):
+                if self.cells[i][j].item == target:
+                    cell_of_the_target = self.cells[i][j]
+        return  cell_of_the_target

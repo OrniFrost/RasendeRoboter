@@ -1,5 +1,6 @@
 # GridView.py
 import tkinter as tk
+from time import sleep
 from tkinter import ttk
 
 from Controller.BaseActionController import BaseActionController
@@ -74,3 +75,13 @@ class GridView:
         self.turn_label = ttk.Label(self.buttons_frame, text="Turn: Player")
         self.turn_label.grid(row=3, column=0, pady=5)
 
+        self.target_label = ttk.Label(self.buttons_frame, text="Actual target : ")
+        self.target_label.grid(row=5, column=0, pady=5)
+
+    def actualize_round(self, number, target):
+        self.round_number_label.config(text=f"Round Number : {number}")
+        self.target_label.config(text=f"Actual target : {target[0]} {target[1]}")
+
+    def update_scores(self,ai_score: int, player_score: int):
+        self.ai_points_label.config(text=f"AI: {ai_score}")
+        self.player_points_label.config(text=f"Player: {player_score}")

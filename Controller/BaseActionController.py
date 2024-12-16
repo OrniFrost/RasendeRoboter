@@ -1,3 +1,5 @@
+import tkinter
+
 from Model import Grid
 from Model.Cell import Cell
 from Model.Pawn import Pawn
@@ -5,11 +7,14 @@ from View import GridView
 
 
 class BaseActionController:
-    def __init__(self, grid : Grid, view: GridView):
+    def __init__(self, root : tkinter.Tk, grid : Grid, view: GridView):
+        self.root = root
         self.view = view
         self.grid = grid
         self.view.controller = self  # Set the controller for GridView
         self.last_pawn_clicked = None
+        self.moves_counter = 0
+        self.rounds_won = 0
 
     def move_pawn(self, pawn: Pawn, dest_cell: Cell):
         old_cell = pawn.cell
@@ -17,6 +22,7 @@ class BaseActionController:
         self.light_off_cells()
         self.view.move_pawn(old_cell, pawn)
         self.last_pawn_clicked = None
+        self.moves_counter += 1
 
     def find_possibles_moves(self, pawn: Pawn) -> [Cell]:
         moves_list: [Cell] = []
@@ -121,3 +127,15 @@ class BaseActionController:
                 if self.grid.cells[i][j].is_highlight:
                     self.grid.cells[i][j].is_highlight = False
                     self.view.update_cell(self.grid.cells[i][j])
+
+    def test_end_turn(self, target) -> bool:
+        for pawn in self.grid.pawns:
+            if pawn.color == target[0]:
+                pawn_target = pawn
+
+        if pawn_target.cell == self.grid.find_cell_of_target(target):
+            return True
+        return False
+
+    def reset_moves_counter(self):
+        self.moves_counter = 0
