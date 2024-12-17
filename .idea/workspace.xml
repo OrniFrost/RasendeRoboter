@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="Merge commit">
+    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="Add message box for settings of the game">
+      <change afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/AIController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AIController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/BaseActionController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/BaseActionController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/BoardController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/BoardController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/GameController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/GameController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/PlayerController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/PlayerController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Grid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Grid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/GridView.py" beforeDir="false" afterPath="$PROJECT_DIR$/View/GridView.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +32,11 @@
     <option name="BRANCH" value="origin/Pawn" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -48,20 +62,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Controllers&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\gabbl\PycharmProjects\RasendeRoboter\Model" />
@@ -109,6 +123,10 @@
       <option name="presentableId" value="Default" />
       <updated>1732280081938</updated>
       <workItem from="1732280096212" duration="38692000" />
+      <workItem from="1733738779295" duration="12103000" />
+      <workItem from="1734076798174" duration="11000" />
+      <workItem from="1734082328167" duration="16327000" />
+      <workItem from="1734334252455" duration="14754000" />
     </task>
     <task id="LOCAL-00001" summary="inital commit">
       <option name="closed" value="true" />
@@ -126,18 +144,65 @@
       <option name="project" value="LOCAL" />
       <updated>1733141592995</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Little fix, there was 2 red squares and no red circle">
+      <option name="closed" value="true" />
+      <created>1733303764753</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1733303764753</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Separation of the controller">
+      <option name="closed" value="true" />
+      <created>1733910483626</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733910483626</updated>
+    </task>
+    <task id="LOCAL-00005" summary="More respect for mvc struct">
+      <option name="closed" value="true" />
+      <created>1734085269855</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1734085269855</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add message box for settings of the game">
+      <option name="closed" value="true" />
+      <created>1734220539873</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1734220539873</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="inital commit" />
     <MESSAGE value="Merge commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge commit" />
+    <MESSAGE value="Little fix, there was 2 red squares and no red circle" />
+    <MESSAGE value="Separation of the controller" />
+    <MESSAGE value="More respect for mvc struct" />
+    <MESSAGE value="Add message box for settings of the game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add message box for settings of the game" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1733303558474" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1734367366899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
