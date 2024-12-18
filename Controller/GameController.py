@@ -104,7 +104,7 @@ class GameController:
         else:
             print("AI wins")
 
-        self.root.quit()
+        self.root.destroy()
 
     def choose_target(self):
         is_okay = False
