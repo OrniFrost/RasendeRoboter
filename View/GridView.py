@@ -42,7 +42,6 @@ class GridView:
 
     def draw_pawn(self,pawn: Pawn):
         row,col = pawn.cell.row, pawn.cell.col
-        print(len(self.grid_cells_view),row,col)
         cell_view = self.grid_cells_view[row][col]
         cell_view.canvas.create_polygon(cell_view.polygon_pawn, fill=pawn.color, outline='black', width=2)
 

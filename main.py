@@ -8,7 +8,9 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.title("Rasende Roboter")
 
-    board_controller = BoardController(root)
+    is_random_board = False
+
+    board_controller = BoardController(root, is_random_board)
     view = board_controller.view
     player_controller = PlayerController(root,board_controller.grid, view)
     ai_controller = AIController(root,board_controller.grid, view)
