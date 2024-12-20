@@ -37,63 +37,26 @@ class AIController(BaseActionController):
         return ai_moves
 
     def a_star_one_pawn(self, target : (str,str)):
-        pawn_target: Pawn = self.grid.get_pawn_of_a_target(target)
-        start_node : Node = Node(self.grid, None, 0, 0)
+        idx_pawn_target = self.find_index_pawn_of_target(target)
+        start_node : Node = Node(self.grid.pawns, None, 0, 0)
         open_list : [Node] = [start_node]
         closed_list : [Node] = []
 
         final_node : Node = None
         while len(open_list) != 0:
-            # Retirer le node avec la value mini
-            min_val = 100000
+            min_val = 1000000
             idx = 0
             for i in range(len(open_list)):
-                if open_list[i].value_f <  min_val:
+                if open_list[i].value_f < min_val:
                     min_val = open_list[i].value_f
                     idx = i
 
-            node: Node = open_list.pop(idx)
-            print(node)
-            # Vérif si node est la solution
-            if node.state.test_pawn_is_on_target(target):
-                print("pawn is on target")
-                final_node = node
+            n : Node = open_list.pop(idx)
+
+            if n.state[idx_pawn_target].cell.item == target:
+                final_node = n
                 break
 
-            closed_list.append(node)
-
-            for next_cell in node.state.find_possible_moves(pawn_target):
-                print("next_cell", next_cell.row, next_cell.col)
-                n_prime = Node(node.state, node, 0, 0) # A vérifier les instances
-                self.move_pawn_node(n_prime, next_cell, target)
-
-                h_n_prime = self.h(n_prime, target)
-                g_n_prime = node.value_g + 1
-
-                f_n_prime = g_n_prime + h_n_prime
-                n_prime.value_f = f_n_prime
-                n_prime.value_g = g_n_prime
-                
-                test_list : [Node] = open_list + closed_list
-                is_in_test_list = True
-                is_inf = True
-                # for n_test in test_list:
-                #     if self.nodes_are_equals(n_prime,n_test) :
-                #         is_in_test_list = False
-                is_in_test_list = n_prime in test_list
-
-                if n_prime.value_g <= node.value_g:
-                    is_inf = False
-
-                print(is_in_test_list, is_inf)
-                if not is_in_test_list and is_inf:
-                    open_list.append(n_prime)
-                    print(open_list)
-
-        if not final_node:
-            return None
-        else:
-            return self.find_travel_to_final_node(final_node,target)
 
 
     def find_travel_to_final_node(self, final_node : Node, target) -> (Pawn,Cell):
@@ -107,6 +70,11 @@ class AIController(BaseActionController):
 
         moves_list.reverse()
         return moves_list
+
+    def find_index_pawn_of_target(self, target : (str,str)) -> int:
+        for i in range(len(self.grid.pawns)):
+            if self.grid.pawns[i].color == target[0]:
+                return i
 
     def h(self,node : Node, target : (str,str)):
         cell_pawn_target : Cell = node.state.get_pawn_of_a_target(target).cell
