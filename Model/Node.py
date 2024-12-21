@@ -34,3 +34,9 @@ class Node:
                 if p_i.cell != p_j.cell:
                     return False
         return True
+
+    def __str__(self):
+        string = ""
+        for p in self.state:
+            string += str(p) + "\n"
+        return string

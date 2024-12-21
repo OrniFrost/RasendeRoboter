@@ -72,7 +72,7 @@ class GameController:
         for i in range(1, self.number_of_rounds+1):
             #Tirer une cible
             target = self.choose_target()
-            target = ("red","circle")
+            target = ("red","square")
             self.view.actualize_round(i, target)
 
             #IA play
