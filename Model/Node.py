@@ -29,11 +29,15 @@ class Node:
         self.value_g = value_g
 
     def __eq__(self, other):
-        for p_i in self.state:
-            for p_j in self.state:
-                if p_i.cell != p_j.cell:
-                    return False
+        for i in range(len(self.state)):
+            p1_coord = self.state[i].cell.row, self.state[i].cell.col
+            p2_coord = other.state[i].cell.row, other.state[i].cell.col
+            if p1_coord != p2_coord:
+                return False
         return True
+
+    def __lt__(self, other):
+        return self.value_f < other.value_f
 
     def __str__(self):
         string = ""
