@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="Fix : now the window close at the end">
-      <change beforePath="$PROJECT_DIR$/Controller/BoardController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/BoardController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="5e22bfd4-bc68-4946-aca9-676ecca37ee1" name="Changes" comment="try to do IA, doesn't work ...">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller/AIController.py" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/AIController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/Node.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Node.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="Controllers" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -54,20 +55,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Controllers&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "AI",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\gabbl\PycharmProjects\RasendeRoboter\Model" />
@@ -119,7 +120,9 @@
       <workItem from="1734076798174" duration="11000" />
       <workItem from="1734082328167" duration="16327000" />
       <workItem from="1734334252455" duration="14754000" />
-      <workItem from="1734438146840" duration="8678000" />
+      <workItem from="1734438146840" duration="21639000" />
+      <workItem from="1734614029586" duration="9210000" />
+      <workItem from="1734685894429" duration="13418000" />
     </task>
     <task id="LOCAL-00001" summary="inital commit">
       <option name="closed" value="true" />
@@ -185,7 +188,23 @@
       <option name="project" value="LOCAL" />
       <updated>1734511598804</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Now the board can have static configuration">
+      <option name="closed" value="true" />
+      <created>1734512181950</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1734512181950</updated>
+    </task>
+    <task id="LOCAL-00010" summary="try to do IA, doesn't work ...">
+      <option name="closed" value="true" />
+      <created>1734716522898</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1734716522898</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,9 +230,11 @@
     <MESSAGE value="Add message box for settings of the game" />
     <MESSAGE value="Add star shape for cells" />
     <MESSAGE value="Fix : now the window close at the end" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix : now the window close at the end" />
+    <MESSAGE value="Now the board can have static configuration" />
+    <MESSAGE value="try to do IA, doesn't work ..." />
+    <option name="LAST_COMMIT_MESSAGE" value="try to do IA, doesn't work ..." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1734512054007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RasendeRoboter$main.coverage" NAME="main Coverage Results" MODIFIED="1734733605356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

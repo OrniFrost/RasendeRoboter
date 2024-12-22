@@ -25,81 +25,7 @@ class BaseActionController:
         self.moves_counter += 1
 
     def find_possibles_moves(self, pawn: Pawn) -> [Cell]:
-        moves_list: [Cell] = []
-
-        row_pawn, col_pawn = pawn.cell.row, pawn.cell.col
-
-        # North
-        i = 0
-        stop = False
-        while not stop:
-            check_row = row_pawn - i
-            if check_row == 0 or self.grid.cells[check_row][col_pawn].walls['N']:
-                stop = True
-                moves_list.append(self.grid.cells[check_row][col_pawn])
-            else:
-                for other_pawn in self.grid.pawns:
-                    if pawn != other_pawn:
-                        if self.grid.cells[check_row - 1][col_pawn] == other_pawn.cell:
-                            stop = True
-                            moves_list.append(self.grid.cells[check_row][col_pawn])
-            i += 1
-
-        # South
-        i = 0
-        stop = False
-        while not stop:
-            check_row = row_pawn + i
-            if check_row == 15 or self.grid.cells[check_row][col_pawn].walls['S']:
-                stop = True
-                moves_list.append(self.grid.cells[check_row][col_pawn])
-            else:
-                for other_pawn in self.grid.pawns:
-                    if pawn != other_pawn:
-                        if self.grid.cells[check_row + 1][col_pawn] == other_pawn.cell:
-                            stop = True
-                            moves_list.append(self.grid.cells[check_row][col_pawn])
-            i += 1
-
-        # West
-        i = 0
-        stop = False
-        while not stop:
-            check_col = col_pawn - i
-            if check_col == 0 or self.grid.cells[row_pawn][check_col].walls['W']:
-                stop = True
-                moves_list.append(self.grid.cells[row_pawn][check_col])
-            else:
-                for other_pawn in self.grid.pawns:
-                    if pawn != other_pawn:
-                        if self.grid.cells[row_pawn][check_col - 1] == other_pawn.cell:
-                            stop = True
-                            moves_list.append(self.grid.cells[row_pawn][check_col])
-            i += 1
-
-        # East
-        i = 0
-        stop = False
-        while not stop:
-            check_col = col_pawn + i
-            if check_col == 15 or self.grid.cells[row_pawn][check_col].walls['E']:
-                stop = True
-                moves_list.append(self.grid.cells[row_pawn][check_col])
-            else:
-                for other_pawn in self.grid.pawns:
-                    if pawn != other_pawn:
-                        if self.grid.cells[row_pawn][check_col + 1] == other_pawn.cell:
-                            stop = True
-                            moves_list.append(self.grid.cells[row_pawn][check_col])
-            i += 1
-
-        # Erase useless moves
-        final_moves_list = []
-        for i in range(len(moves_list)):
-            if pawn.cell != moves_list[i]:
-                final_moves_list.append(moves_list[i])
-
-        return final_moves_list
+        return self.grid.find_possible_moves(pawn)
 
     def click_on_cell(self, cell: Cell):
         print(cell.row, cell.col)
@@ -128,12 +54,8 @@ class BaseActionController:
                     self.grid.cells[i][j].is_highlight = False
                     self.view.update_cell(self.grid.cells[i][j])
 
-    def test_end_turn(self, target) -> bool:
-        for pawn in self.grid.pawns:
-            if pawn.color == target[0]:
-                pawn_target = pawn
-
-        if pawn_target.cell == self.grid.find_cell_of_target(target):
+    def test_end_turn(self, target : (str,str)) -> bool:
+        if self.grid.test_pawn_is_on_target(target) :
             return True
         return False
 
