@@ -72,7 +72,8 @@ class GameController:
         for i in range(1, self.number_of_rounds+1):
             #Tirer une cible
             target = self.choose_target()
-            target = ("black","hole")
+            # target = ("black","hole")
+            target = ("red","square")
             self.view.actualize_round(i, target)
 
             #IA play
@@ -107,22 +108,35 @@ class GameController:
         is_okay = False
         while not is_okay:
             target = random.choice(self.remaining_items_list)
-            color_target = target[0]
-            for pawn in self.grid.pawns:
-                if color_target == pawn.color:
-                    pawn_of_the_target: Pawn = pawn
 
-            cell_of_the_target = self.grid.find_cell_of_target(target)
+            if target != ("black","hole"):
+                color_target = target[0]
+                for pawn in self.grid.pawns:
+                    if color_target == pawn.color:
+                        pawn_of_the_target: Pawn = pawn
 
-            # print(cell_of_the_target)
+                cells_not_valid: [Cell] = []
+                cell_of_the_target = self.grid.find_cell_of_target(target)
+                cells_not_valid.append(cell_of_the_target)
+                cells_not_valid.append(self.player_controller.find_possibles_moves(pawn_of_the_target))
 
-            cells_not_valid : [Cell] = self.player_controller.find_possibles_moves(pawn_of_the_target)
-            cells_not_valid.append(cell_of_the_target)
-
-            if pawn_of_the_target.cell not in cells_not_valid:
-                is_okay = True
+                if pawn_of_the_target.cell not in cells_not_valid:
+                    is_okay = True
+                else :
+                    is_okay = False
             else :
-                is_okay = False
+                cell_of_the_target = self.grid.find_cell_of_target(target)
+                cells_not_valid: [Cell] = []
+
+                for pawn in self.grid.pawns:
+                    for cell in self.player_controller.find_possibles_moves(pawn):
+                        if cell_of_the_target == cell:
+                            cells_not_valid.append(cell)
+
+                if cell_of_the_target in cells_not_valid:
+                    is_okay = False
+                else:
+                    is_okay = True
 
         self.remaining_items_list.remove(target)
         return target

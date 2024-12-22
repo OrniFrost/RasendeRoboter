@@ -25,7 +25,10 @@ class BaseActionController:
         self.moves_counter += 1
 
     def find_possibles_moves(self, pawn: Pawn) -> [Cell]:
-        return self.grid.find_possible_moves(pawn)
+        return self.grid.find_possible_moves(pawn, self.grid.pawns)
+
+    def find_possibles_moves_with_specific_pawns(self, pawn: Pawn, pawns : [Pawn]) -> [Cell]:
+        return self.grid.find_possible_moves(pawn, pawns)
 
     def click_on_cell(self, cell: Cell):
         print(cell.row, cell.col)

@@ -69,7 +69,7 @@ class Grid:
                 pawn_target = pawn
         return pawn_target
 
-    def find_possible_moves(self, pawn: Pawn) -> [Cell]:
+    def find_possible_moves(self, pawn: Pawn, pawns : [Pawn]) -> [Cell]:
         moves_list: [Cell] = []
 
         row_pawn, col_pawn = pawn.cell.row, pawn.cell.col
@@ -83,7 +83,7 @@ class Grid:
                 stop = True
                 moves_list.append(self.cells[check_row][col_pawn])
             else:
-                for other_pawn in self.pawns:
+                for other_pawn in pawns:
                     if pawn != other_pawn:
                         if self.cells[check_row - 1][col_pawn] == other_pawn.cell:
                             stop = True
@@ -99,7 +99,7 @@ class Grid:
                 stop = True
                 moves_list.append(self.cells[check_row][col_pawn])
             else:
-                for other_pawn in self.pawns:
+                for other_pawn in pawns:
                     if pawn != other_pawn:
                         if self.cells[check_row + 1][col_pawn] == other_pawn.cell:
                             stop = True
@@ -115,7 +115,7 @@ class Grid:
                 stop = True
                 moves_list.append(self.cells[row_pawn][check_col])
             else:
-                for other_pawn in self.pawns:
+                for other_pawn in pawns:
                     if pawn != other_pawn:
                         if self.cells[row_pawn][check_col - 1] == other_pawn.cell:
                             stop = True
@@ -131,7 +131,7 @@ class Grid:
                 stop = True
                 moves_list.append(self.cells[row_pawn][check_col])
             else:
-                for other_pawn in self.pawns:
+                for other_pawn in pawns:
                     if pawn != other_pawn:
                         if self.cells[row_pawn][check_col + 1] == other_pawn.cell:
                             stop = True

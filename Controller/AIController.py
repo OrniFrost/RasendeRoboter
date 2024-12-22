@@ -18,8 +18,25 @@ class AIController(BaseActionController):
 
     def make_turn(self, target):
 
-        moves = self.a_star_one_pawn(target)
-        print(moves)
+        if target != ("black","hole"):
+            moves = self.a_star_one_pawn(
+                    idx_pawn_target=self.find_index_pawn_of_target(target),
+                    cell_target= self.grid.find_cell_of_target(target)
+                )
+        else :
+            moves = None
+            moves_list = []
+            for i in range(4):
+                moves_list.append(self.a_star_one_pawn(
+                    idx_pawn_target=i,
+                    cell_target=self.grid.find_cell_of_target(target)
+                ))
+            if len(moves_list) != 0:
+                moves = moves_list.pop(0)
+                for m in moves_list:
+                    if m is not None :
+                        if len(m) < len(moves):
+                            moves = m
         if moves is not None:
             for move in moves:
                 pawn_move : Pawn = move[0]
@@ -31,6 +48,9 @@ class AIController(BaseActionController):
                 var = tkinter.IntVar()
                 self.root.after(500, var.set, 1)
                 self.root.wait_variable(var)
+        else :
+            print("peux pas fréro")
+
 
     def generate_random_move(self) -> [(Pawn, Cell)]:
         ai_moves = []
@@ -40,14 +60,13 @@ class AIController(BaseActionController):
             ai_moves.append((pawn,cell))
         return ai_moves
 
-    def a_star_one_pawn(self, target : (str,str)):
-        idx_pawn_target = self.find_index_pawn_of_target(target)
-        cell_target = self.grid.find_cell_of_target(target)
+    def a_star_one_pawn(self, idx_pawn_target : int, cell_target : Cell):
 
         start_node : Node = Node(self.grid.pawns, None, 0, 0)
         open_list : [Node] = [start_node]
         closed_list : [Node] = []
-
+        if idx_pawn_target == 1 :
+            print("a")
         while len(open_list) != 0:
 
             open_list.sort()
@@ -56,16 +75,17 @@ class AIController(BaseActionController):
 
             closed_list.append(n)
 
-            if n.state[idx_pawn_target].cell.item == target:
+            if n.state[idx_pawn_target].cell == cell_target:
                 final_node = n
                 return self.find_travel_to_final_node(final_node, idx_pawn_target)
 
-            for next_cell in self.find_possibles_moves(n.state[idx_pawn_target]):
+            pawn = n.state[idx_pawn_target]
+            for next_cell in self.find_possibles_moves_with_specific_pawns(pawn, n.state):
                 y : Node = Node([Pawn(p.color,p.cell) for p in n.state], n, 0,0)
                 p : Pawn = y.state[idx_pawn_target]
                 p.cell = next_cell
 
-                # self.view.test_cell(next_cell)
+                self.view.test_cell(next_cell)
 
                 g_y = n.value_g + 1
 
@@ -86,18 +106,10 @@ class AIController(BaseActionController):
 
                     open_list.append(y)
 
-        return []
+        return None
 
-    def is_not_in_list(self, n : Node, list : [Node]) -> bool:
-        for n_l in list:
-            for p_i in n.state:
-                p_i_coord = p_i.cell.row,p_i.cell.col
-                for p_j in n_l.state:
-                    p_j_coord = p_j.cell.row,p_j.cell.col
-                    if p_i_coord == p_j_coord:
-                        return
 
-    def find_travel_to_final_node(self, final_node : Node, idx_pawn : int) -> (Pawn,Cell):
+    def find_travel_to_final_node(self, final_node : Node, idx_pawn : int) -> [(Pawn,Cell)]:
         moves_list: (Pawn,Cell) = []
         n : Node = final_node
 
