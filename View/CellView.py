@@ -33,12 +33,26 @@ class CellView:
         item = self.cell.item
         if item != (None, None):
             color = item[0]
-            match item[1]:
-                case "circle":
-                    self.canvas.create_oval(10, 10, 40, 40, fill=color, outline='')
-                case "square":
-                    self.canvas.create_rectangle(10, 10, 40, 40, fill=color, outline='')
-                case "triangle":
-                    self.canvas.create_polygon([25, 10, 10, 40, 40, 40], fill=color, outline='')
-                case "star":
-                    self.canvas.create_polygon(self.polygon_star, fill=color, outline='')
+            if item == ("black", "hole"):
+                self.canvas.create_oval(10, 10, 40, 40, fill=color, outline='')
+
+                self.canvas.create_oval(5, 5, 45, 45, outline='black')
+                self.canvas.create_oval(7, 7, 43, 43, outline='black')
+
+                self.canvas.create_polygon([20,45,10,40,5,30,21,28,24,37], fill="blue", outline='')
+
+                self.canvas.create_polygon([5,19,10,9,20,4,21,21,13,24], fill="green", outline='')
+
+                self.canvas.create_polygon([29,4,39,9,44,19,28,21,25,13], fill="yellow", outline='')
+
+                self.canvas.create_polygon([44,30,39,40,29,45,28,28,37,25], fill="red", outline='')
+            else:
+                match item[1]:
+                    case "circle":
+                        self.canvas.create_oval(10, 10, 40, 40, fill=color, outline='')
+                    case "square":
+                        self.canvas.create_rectangle(10, 10, 40, 40, fill=color, outline='')
+                    case "triangle":
+                        self.canvas.create_polygon([25, 10, 10, 40, 40, 40], fill=color, outline='')
+                    case "star":
+                        self.canvas.create_polygon(self.polygon_star, fill=color, outline='')

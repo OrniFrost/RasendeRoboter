@@ -51,6 +51,8 @@ class BoardController:
         tile[4][5].item = items_list[13]
         tile[5][2].item = items_list[7]
 
+        tile[5][7].item = items_list[16]
+
         return tile
 
     def build_tile_2(self):

@@ -54,8 +54,13 @@ class Grid:
         return  cell_of_the_target
 
     def test_pawn_is_on_target(self, target: (str,str)) -> bool:
-        if self.get_pawn_of_a_target(target).cell == self.find_cell_of_target(target):
-            return True
+        if target != ("black", "hole"):
+            if self.get_pawn_of_a_target(target).cell == self.find_cell_of_target(target):
+                return True
+        else :
+            for pawn in self.pawns:
+                if pawn.cell == self.find_cell_of_target(target):
+                    return True
         return False
 
     def get_pawn_of_a_target(self, target : (str,str)) -> Pawn :
