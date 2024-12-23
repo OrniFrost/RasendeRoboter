@@ -8,7 +8,7 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.title("Rasende Roboter")
 
-    is_random_board = False
+    is_random_board = True
 
     board_controller = BoardController(root, is_random_board)
     view = board_controller.view

@@ -1,6 +1,6 @@
 import tkinter as tk
 import random
-from tkinter import simpledialog, ttk, StringVar
+from tkinter import simpledialog, ttk, StringVar, messagebox
 
 from Controller.AIController import AIController
 from Controller.PlayerController import PlayerController
@@ -73,15 +73,30 @@ class GameController:
             #Tirer une cible
             target = self.choose_target()
             # target = ("black","hole")
-            target = ("red","square")
+            # target = ("red","square")
+
             self.view.actualize_round(i, target)
 
-            #IA play
-            self.ai_controller.make_turn(target)
+            pawns_start_pose : [Pawn] = self.grid.pawns.copy()
 
+            #IA searches solution
+            ai_moves : [(Pawn, Cell)] = self.ai_controller.calculate_turn(target)
+            if ai_moves is not None:
+                messagebox.showinfo("Information", f"AI found with {len(ai_moves)} moves")
+            else:
+                messagebox.showinfo("Information", f"AI didn't find a solution")
 
-            # Player
+            # Player plays
             self.player_controller.make_turn(target)
+
+            #AI shows solution
+            if ai_moves is not None:
+                #Replace pawns
+                for i in range(len(pawns_start_pose)):
+                    self.ai_controller.move_pawn(self.grid.pawns[i], pawns_start_pose[i].cell)
+
+                self.ai_controller.make_turn(ai_moves)
+
 
             print(f"AI : {self.ai_controller.moves_counter} - Player : {self.player_controller.moves_counter}")
             if self.ai_controller.moves_counter >= self.player_controller.moves_counter :
@@ -98,9 +113,9 @@ class GameController:
 
         #End of the game
         if self.ai_controller.rounds_won > self.player_controller.rounds_won :
-            print("Player wins")
+            messagebox.showinfo("Information", f"You win { self.ai_controller.rounds_won} - {self.player_controller.rounds_won} ! GG")
         else:
-            print("AI wins")
+            messagebox.showinfo("Information", f"AI wins { self.player_controller.rounds_won} - {self.ai_controller.rounds_won} ! Too bad")
 
         self.root.destroy()
 

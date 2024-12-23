@@ -87,6 +87,4 @@ class GridView:
 
 
     def test_cell(self, cell: Cell):
-        print("test_cell")
         self.grid_cells_view[cell.row][cell.col].canvas.create_rectangle(15,15,35,35, fill='brown')
-        # self.update_cell(cell)

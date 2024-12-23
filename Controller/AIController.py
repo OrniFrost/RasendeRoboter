@@ -16,7 +16,7 @@ class AIController(BaseActionController):
     def __init__(self, root, grid, view):
         super().__init__(root, grid, view)
 
-    def make_turn(self, target):
+    def calculate_turn(self, target) -> [(Pawn,Cell)]:
 
         if target != ("black","hole"):
             moves = self.a_star_one_pawn(
@@ -37,19 +37,24 @@ class AIController(BaseActionController):
                     if m is not None :
                         if len(m) < len(moves):
                             moves = m
+
+        return moves
+
+    def make_turn(self, moves : [(Pawn, Cell)]):
+        self.wait(1000)
         if moves is not None:
             for move in moves:
                 pawn_move : Pawn = move[0]
                 for p in self.grid.pawns:
                     if pawn_move.color == p.color:
                         reel_pawn = p
+                self.wait(750)
                 self.move_pawn(reel_pawn, move[1])
-                # print(move[0],move[1])
-                var = tkinter.IntVar()
-                self.root.after(500, var.set, 1)
-                self.root.wait_variable(var)
-        else :
-            print("peux pas fréro")
+
+    def wait(self, ms: int):
+        var = tkinter.IntVar()
+        self.root.after(500, var.set, 1)
+        self.root.wait_variable(var)
 
 
     def generate_random_move(self) -> [(Pawn, Cell)]:
@@ -65,8 +70,7 @@ class AIController(BaseActionController):
         start_node : Node = Node(self.grid.pawns, None, 0, 0)
         open_list : [Node] = [start_node]
         closed_list : [Node] = []
-        if idx_pawn_target == 1 :
-            print("a")
+
         while len(open_list) != 0:
 
             open_list.sort()
@@ -85,7 +89,7 @@ class AIController(BaseActionController):
                 p : Pawn = y.state[idx_pawn_target]
                 p.cell = next_cell
 
-                self.view.test_cell(next_cell)
+                # self.view.test_cell(next_cell)
 
                 g_y = n.value_g + 1
 
