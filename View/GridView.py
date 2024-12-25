@@ -59,7 +59,7 @@ class GridView:
         self.grid_cells_view[cell.row][cell.col].draw()
 
     def instanciate_buttons(self, controller : BaseActionController):
-        self.button_test = ttk.Button(self.buttons_frame, text="Test", command=self.controller.test_button)
+        self.button_test = ttk.Button(self.buttons_frame, text="Skip turn", command=self.controller.skip_button)
         self.button_test.grid(row=4, column=0)
 
         self.round_number_label = ttk.Label(self.buttons_frame, text="Round Number: 1")

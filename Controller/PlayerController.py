@@ -12,10 +12,11 @@ class PlayerController(BaseActionController):
         self.is_not_playing = BooleanVar()
         self.is_not_playing.set(True)
 
-    def test_button(self):
-        new_cell = random.choice(random.choice(self.grid.cells))
-        pawn = random.choice(self.grid.pawns)
-        self.move_pawn(pawn, new_cell)
+    def skip_button(self):
+        # new_cell = random.choice(random.choice(self.grid.cells))
+        # pawn = random.choice(self.grid.pawns)
+        # self.move_pawn(pawn, new_cell)
+        self.is_not_playing.set(True)
 
     def make_turn(self, target):
         self.is_not_playing.set(False)
