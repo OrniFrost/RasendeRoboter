@@ -14,7 +14,7 @@ class BaseActionController:
         self.view.controller = self  # Set the controller for GridView
         self.last_pawn_clicked = None
         self.moves_counter = 0
-        self.rounds_won = 0
+        # self.rounds_won = 0
 
     def move_pawn(self, pawn: Pawn, dest_cell: Cell):
         old_cell = pawn.cell
@@ -22,7 +22,7 @@ class BaseActionController:
         self.light_off_cells()
         self.view.move_pawn(old_cell, pawn)
         self.last_pawn_clicked = None
-        self.moves_counter += 1
+        # self.moves_counter += 1
 
     def find_possibles_moves(self, pawn: Pawn) -> [Cell]:
         return self.grid.find_possible_moves(pawn, self.grid.pawns)
@@ -49,6 +49,9 @@ class BaseActionController:
             if cell.is_highlight:
                 if self.last_pawn_clicked:
                     self.move_pawn(self.last_pawn_clicked, cell)
+                    self.moves_counter += 1
+                    print(f"move pawn {self.moves_counter}")
+                    self.view.increment_moves_counter()
 
     def light_off_cells(self):
         for i in range(len(self.grid.cells)):

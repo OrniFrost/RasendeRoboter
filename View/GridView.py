@@ -24,6 +24,8 @@ class GridView:
 
         self.grid_cells_view: [[CellView]] = []
 
+        self.moves_counter = 0
+
     def draw_grid(self, grid):
         print("draw_grid")
         for i in range(len(grid.cells)):
@@ -59,8 +61,6 @@ class GridView:
         self.grid_cells_view[cell.row][cell.col].draw()
 
     def instanciate_buttons(self, controller : BaseActionController):
-        self.button_test = ttk.Button(self.buttons_frame, text="Skip turn", command=self.controller.skip_button)
-        self.button_test.grid(row=4, column=0)
 
         self.round_number_label = ttk.Label(self.buttons_frame, text="Round Number: 1")
         self.round_number_label.grid(row=0, column=0, pady=5)
@@ -71,11 +71,17 @@ class GridView:
         self.ai_points_label = ttk.Label(self.buttons_frame, text="AI: 0")
         self.ai_points_label.grid(row=1, column=0, pady=5)
 
-        self.turn_label = ttk.Label(self.buttons_frame, text="Turn: Player")
+        self.target_label = ttk.Label(self.buttons_frame, text="Actual target : ")
+        self.target_label.grid(row=2, column=0, pady=5)
+
+        self.turn_label = ttk.Label(self.buttons_frame, text="Turn : Player")
         self.turn_label.grid(row=3, column=0, pady=5)
 
-        self.target_label = ttk.Label(self.buttons_frame, text="Actual target : ")
-        self.target_label.grid(row=5, column=0, pady=5)
+        self.button_test = ttk.Button(self.buttons_frame, text="Skip turn", command=self.controller.skip_button)
+        self.button_test.grid(row=4, column=0, pady=5)
+
+        self.moves_counter_label = ttk.Label(self.buttons_frame, text="Moves counter : 0")
+        self.moves_counter_label.grid(row=5, column=0, pady=5)
 
     def actualize_round(self, number, target):
         self.round_number_label.config(text=f"Round Number : {number}")
@@ -85,6 +91,16 @@ class GridView:
         self.ai_points_label.config(text=f"AI: {ai_score}")
         self.player_points_label.config(text=f"Player: {player_score}")
 
+    def actualize_turn(self, player: str):
+        self.turn_label.config(text=f"Turn : {player}")
+
+    def increment_moves_counter(self):
+        self.moves_counter += 1
+        self.moves_counter_label.config(text=f"Moves counter : {self.moves_counter}")
+
+    def reset_moves_counter(self):
+        self.moves_counter = 0
+        self.moves_counter_label.config(text=f"Moves counter : {self.moves_counter}")
 
     def test_cell(self, cell: Cell):
         self.grid_cells_view[cell.row][cell.col].canvas.create_rectangle(15,15,35,35, fill='brown')

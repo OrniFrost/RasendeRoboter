@@ -17,8 +17,10 @@ class PlayerController(BaseActionController):
         # pawn = random.choice(self.grid.pawns)
         # self.move_pawn(pawn, new_cell)
         self.is_not_playing.set(True)
+        self.reset_moves_counter()
 
     def make_turn(self, target):
+        self.view.reset_moves_counter()
         self.is_not_playing.set(False)
         self.check_end_turn(target)
         self.root.wait_variable(self.is_not_playing)

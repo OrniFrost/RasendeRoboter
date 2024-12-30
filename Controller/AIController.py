@@ -41,6 +41,7 @@ class AIController(BaseActionController):
         return moves
 
     def make_turn(self, moves : [(Pawn, Cell)]):
+        self.view.reset_moves_counter()
         self.wait(1000)
         if moves is not None:
             for move in moves:
@@ -48,6 +49,7 @@ class AIController(BaseActionController):
                 for p in self.grid.pawns:
                     if pawn_move.color == p.color:
                         reel_pawn = p
+                self.view.increment_moves_counter()
                 self.wait(750)
                 self.move_pawn(reel_pawn, move[1])
 

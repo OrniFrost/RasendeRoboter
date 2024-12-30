@@ -24,17 +24,19 @@ class GameController:
         self.view = view
         self.player_controller = player_controller
         self.ai_controller = ai_controller
+        self.player_rounds_won = 0
+        self.ai_rounds_won = 0
 
 
         self.remaining_items_list = items_list.copy()
 
         self.ai_level: str = ""
-        self.number_of_rounds: int = 0
+        self.number_of_winning_rounds: int = 0
 
         self.pop_menu = tk.Menu(self.root)
         self.ask_for_settings()
 
-        print(self.ai_level, self.number_of_rounds)
+        print(self.ai_level, self.number_of_winning_rounds)
 
         self.do_the_game()
 
@@ -47,7 +49,7 @@ class GameController:
         ai_level_combobox.grid(row=0, column=1, padx=10, pady=10)
         ai_level_combobox.current(0)  # Set default value
 
-        ttk.Label(dialog, text="Number of Rounds:").grid(row=1, column=0, padx=10, pady=10)
+        ttk.Label(dialog, text="Number of winning rounds:").grid(row=1, column=0, padx=10, pady=10)
         rounds_var = tk.IntVar(value=3)  # Default value
 
         round_options = [3, 5, 7]
@@ -57,7 +59,7 @@ class GameController:
 
         def on_submit():
             self.ai_level = ai_level_combobox.get()
-            self.number_of_rounds = rounds_var.get()
+            self.number_of_winning_rounds = rounds_var.get()
             dialog.destroy()
 
         submit_button = ttk.Button(dialog, text="Submit", command=on_submit)
@@ -69,13 +71,15 @@ class GameController:
 
 
     def do_the_game(self):
-        for i in range(1, self.number_of_rounds+1):
+        round_number = 1
+        while (self.ai_rounds_won < self.number_of_winning_rounds
+               and self.player_rounds_won < self.number_of_winning_rounds):
             #Tirer une cible
             target = self.choose_target()
             # target = ("black","hole")
             # target = ("red","square")
 
-            self.view.actualize_round(i, target)
+            self.view.actualize_round(round_number, target)
 
             pawns_start_pose : [Pawn] = self.grid.pawns.copy()
 
@@ -87,35 +91,44 @@ class GameController:
                 messagebox.showinfo("Information", f"AI didn't find a solution")
 
             # Player plays
+            self.view.actualize_turn("Player")
             self.player_controller.make_turn(target)
 
-            #AI shows solution
+            #If AI found a solution
             if ai_moves is not None:
+
+                self.view.actualize_turn("AI")
                 #Replace pawns
-                for i in range(len(pawns_start_pose)):
-                    self.ai_controller.move_pawn(self.grid.pawns[i], pawns_start_pose[i].cell)
+                for round_number in range(len(pawns_start_pose)):
+                    self.ai_controller.move_pawn(self.grid.pawns[round_number], pawns_start_pose[round_number].cell)
 
                 self.ai_controller.make_turn(ai_moves)
 
-
-            print(f"AI : {self.ai_controller.moves_counter} - Player : {self.player_controller.moves_counter}")
-            if self.ai_controller.moves_counter >= self.player_controller.moves_counter :
-                self.player_controller.rounds_won += 1
+                ai_moves_counter = len(ai_moves)
+                print(f"ai : {ai_moves_counter} - player {self.player_controller.moves_counter}")
+                if (self.player_controller.moves_counter <= ai_moves_counter
+                        and self.player_controller.moves_counter != 0) :
+                    self.player_rounds_won += 1
+                else:
+                    self.ai_rounds_won += 1
             else:
-                self.ai_controller.rounds_won += 1
+                #If player found a solution without skip
+                if self.player_controller.moves_counter != 0:
+                    self.player_rounds_won += 1
 
-            self.view.update_scores(ai_score=self.ai_controller.rounds_won,
-                                    player_score=self.player_controller.rounds_won)
+            self.view.update_scores(ai_score=self.ai_rounds_won,
+                                    player_score=self.player_rounds_won)
 
-            # Reset counters
-            self.ai_controller.reset_moves_counter()
+            # Reset counter
             self.player_controller.reset_moves_counter()
 
+            round_number += 1
+            print("end turn")
         #End of the game
-        if self.ai_controller.rounds_won > self.player_controller.rounds_won :
-            messagebox.showinfo("Information", f"You win { self.ai_controller.rounds_won} - {self.player_controller.rounds_won} ! GG")
+        if self.ai_rounds_won < self.player_rounds_won :
+            messagebox.showinfo("Information", f"You win { self.player_rounds_won} - {self.ai_rounds_won} ! GG")
         else:
-            messagebox.showinfo("Information", f"AI wins { self.player_controller.rounds_won} - {self.ai_controller.rounds_won} ! Too bad")
+            messagebox.showinfo("Information", f"AI wins { self.ai_rounds_won} - {self.player_rounds_won} ! Too bad")
 
         self.root.destroy()
 
