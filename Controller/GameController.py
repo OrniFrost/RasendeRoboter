@@ -81,7 +81,7 @@ class GameController:
 
             self.view.actualize_round(round_number, target)
 
-            pawns_start_pose : [Pawn] = self.grid.pawns.copy()
+            pawns_start_pose : [Pawn] = [Pawn(p.color, p.cell) for p in self.grid.pawns]
 
             #IA searches solution
             ai_moves : [(Pawn, Cell)] = self.ai_controller.calculate_turn(target)
@@ -99,8 +99,8 @@ class GameController:
 
                 self.view.actualize_turn("AI")
                 #Replace pawns
-                for round_number in range(len(pawns_start_pose)):
-                    self.ai_controller.move_pawn(self.grid.pawns[round_number], pawns_start_pose[round_number].cell)
+                for i in range(len(pawns_start_pose)):
+                    self.ai_controller.move_pawn(self.grid.pawns[i], pawns_start_pose[i].cell)
 
                 self.ai_controller.make_turn(ai_moves)
 
