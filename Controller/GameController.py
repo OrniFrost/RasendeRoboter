@@ -1,6 +1,6 @@
 import tkinter as tk
 import random
-from tkinter import simpledialog, ttk, StringVar
+from tkinter import simpledialog, ttk, StringVar, messagebox
 
 from Controller.AIController import AIController
 from Controller.PlayerController import PlayerController
@@ -24,17 +24,19 @@ class GameController:
         self.view = view
         self.player_controller = player_controller
         self.ai_controller = ai_controller
+        self.player_rounds_won = 0
+        self.ai_rounds_won = 0
 
 
         self.remaining_items_list = items_list.copy()
 
         self.ai_level: str = ""
-        self.number_of_rounds: int = 0
+        self.number_of_winning_rounds: int = 0
 
         self.pop_menu = tk.Menu(self.root)
         self.ask_for_settings()
 
-        print(self.ai_level, self.number_of_rounds)
+        print(self.ai_level, self.number_of_winning_rounds)
 
         self.do_the_game()
 
@@ -47,7 +49,7 @@ class GameController:
         ai_level_combobox.grid(row=0, column=1, padx=10, pady=10)
         ai_level_combobox.current(0)  # Set default value
 
-        ttk.Label(dialog, text="Number of Rounds:").grid(row=1, column=0, padx=10, pady=10)
+        ttk.Label(dialog, text="Number of winning rounds:").grid(row=1, column=0, padx=10, pady=10)
         rounds_var = tk.IntVar(value=3)  # Default value
 
         round_options = [3, 5, 7]
@@ -57,7 +59,7 @@ class GameController:
 
         def on_submit():
             self.ai_level = ai_level_combobox.get()
-            self.number_of_rounds = rounds_var.get()
+            self.number_of_winning_rounds = rounds_var.get()
             dialog.destroy()
 
         submit_button = ttk.Button(dialog, text="Submit", command=on_submit)
@@ -69,63 +71,106 @@ class GameController:
 
 
     def do_the_game(self):
-        for i in range(1, self.number_of_rounds+1):
+        round_number = 1
+        while (self.ai_rounds_won < self.number_of_winning_rounds
+               and self.player_rounds_won < self.number_of_winning_rounds):
             #Tirer une cible
             target = self.choose_target()
-            self.view.actualize_round(i, target)
+            # target = ("black","hole")
+            # target = ("red","circle")
 
-            #IA play
-            self.ai_controller.make_turn(target)
+            self.view.actualize_round(round_number, target)
 
+            pawns_start_pose : [Pawn] = [Pawn(p.color, p.cell) for p in self.grid.pawns]
 
-            # Player
-            # self.player_controller.is_playing = True
-            # while self.player_controller.is_playing:
-            #     self.player_controller.make_turn(target)
-            # self.player_controller.is_playing.set(True)
+            #IA searches solution
+            ai_moves : [(Pawn, Cell)] = self.ai_controller.calculate_turn(target, level=self.ai_level)
+            if ai_moves is not None:
+                messagebox.showinfo("Information", f"AI found with {len(ai_moves)} moves")
+            else:
+                messagebox.showinfo("Information", f"AI didn't find a solution")
+
+            # Player plays
+            self.replace_pawns(pawns_start_pose)
+            self.view.actualize_turn("Player")
             self.player_controller.make_turn(target)
 
-            print(f"AI : {self.ai_controller.moves_counter} - Player : {self.player_controller.moves_counter}")
-            if self.ai_controller.moves_counter >= self.player_controller.moves_counter :
-                self.player_controller.rounds_won += 1
+            #If AI found a solution
+            if ai_moves is not None:
+
+                self.view.actualize_turn("AI")
+                #Replace pawns
+                self.replace_pawns(pawns_start_pose)
+
+                self.ai_controller.make_turn(ai_moves)
+
+                ai_moves_counter = len(ai_moves)
+                print(f"ai : {ai_moves_counter} - player {self.player_controller.moves_counter}")
+                if (self.player_controller.moves_counter <= ai_moves_counter
+                        and self.player_controller.moves_counter != 0) :
+                    self.player_rounds_won += 1
+                else:
+                    self.ai_rounds_won += 1
             else:
-                self.ai_controller.rounds_won += 1
+                #If player found a solution without skip
+                if self.player_controller.moves_counter != 0:
+                    self.player_rounds_won += 1
 
-            self.view.update_scores(ai_score=self.ai_controller.rounds_won,
-                                    player_score=self.player_controller.rounds_won)
+            self.view.update_scores(ai_score=self.ai_rounds_won,
+                                    player_score=self.player_rounds_won)
 
-            # Reset counters
-            self.ai_controller.reset_moves_counter()
+            # Reset counter
             self.player_controller.reset_moves_counter()
 
+            round_number += 1
+            print("end turn")
         #End of the game
-        if self.ai_controller.rounds_won > self.player_controller.rounds_won :
-            print("Player wins")
+        if self.ai_rounds_won < self.player_rounds_won :
+            messagebox.showinfo("Information", f"You win { self.player_rounds_won} - {self.ai_rounds_won} ! GG")
         else:
-            print("AI wins")
+            messagebox.showinfo("Information", f"AI wins { self.ai_rounds_won} - {self.player_rounds_won} ! Too bad")
 
-        self.root.quit()
+        self.root.destroy()
 
-    def choose_target(self):
+    def choose_target(self) -> (str,str):
         is_okay = False
         while not is_okay:
             target = random.choice(self.remaining_items_list)
-            color_target = target[0]
-            for pawn in self.grid.pawns:
-                if color_target == pawn.color:
-                    pawn_of_the_target: Pawn = pawn
 
-            cell_of_the_target = self.grid.find_cell_of_target(target)
+            if target != ("black","hole"):
+                color_target = target[0]
+                for pawn in self.grid.pawns:
+                    if color_target == pawn.color:
+                        pawn_of_the_target: Pawn = pawn
 
-            # print(cell_of_the_target)
+                cells_not_valid: [Cell] = []
+                cell_of_the_target = self.grid.find_cell_of_target(target)
 
-            cells_not_valid : [Cell] = self.player_controller.find_possibles_moves(pawn_of_the_target)
-            cells_not_valid.append(cell_of_the_target)
+                cells_not_valid.append(pawn_of_the_target.cell)
+                cells_not_valid = cells_not_valid + self.player_controller.find_possibles_moves(pawn_of_the_target)
 
-            if pawn_of_the_target.cell not in cells_not_valid:
-                is_okay = True
+                if cell_of_the_target not in cells_not_valid:
+                    is_okay = True
+                else :
+                    is_okay = False
             else :
-                is_okay = False
+                cell_of_the_target = self.grid.find_cell_of_target(target)
+                cells_not_valid: [Cell] = []
+
+                for pawn in self.grid.pawns:
+                    cells_not_valid.append(pawn.cell)
+                    for cell in self.player_controller.find_possibles_moves(pawn):
+                        if cell_of_the_target == cell:
+                            cells_not_valid.append(cell)
+
+                if cell_of_the_target in cells_not_valid:
+                    is_okay = False
+                else:
+                    is_okay = True
 
         self.remaining_items_list.remove(target)
         return target
+
+    def replace_pawns(self, pawns_start_pose : [Pawn]):
+        for i in range(len(pawns_start_pose)):
+            self.ai_controller.move_pawn(self.grid.pawns[i], pawns_start_pose[i].cell)
