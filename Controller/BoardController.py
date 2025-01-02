@@ -1,5 +1,7 @@
 # BoardController.py
 import random
+from tkinter import Tk
+
 from Model.Cell import Cell
 from Model.Grid import Grid
 from Model.Pawn import Pawn
@@ -8,9 +10,10 @@ from View.GridView import GridView
 from constants import items_list
 
 class BoardController:
-    def __init__(self, root):
+    def __init__(self, root : Tk, is_random_board : bool ):
+        self.is_random_board = is_random_board
         self.tiles = [self.build_tile_1(), self.build_tile_2(), self.build_tile_3(), self.build_tile_4()]
-        random.shuffle(self.tiles)
+        if self.is_random_board : random.shuffle(self.tiles)
         for i in range(1, 4):
             self.tiles[i] = self.rotate_tile_clockwise(self.tiles[i], i)
         self.grid = Grid(self.tiles[0], self.tiles[1], self.tiles[2], self.tiles[3])
@@ -47,6 +50,8 @@ class BoardController:
         tile[3][1].item = items_list[10]
         tile[4][5].item = items_list[13]
         tile[5][2].item = items_list[7]
+
+        tile[5][7].item = items_list[16]
 
         return tile
 
@@ -133,8 +138,14 @@ class BoardController:
     def create_pawns(self):
         colors_list = ["blue", "green", "red", "yellow"]
         pawns_list = []
-        for cell in self.find_random_cells_starts_for_pawns():
-            pawns_list.append(Pawn(colors_list.pop(0), cell))
+        if self.is_random_board :
+            for cell in self.find_random_cells_starts_for_pawns():
+                pawns_list.append(Pawn(colors_list.pop(0), cell))
+        else :
+            pawns_list.append(Pawn(colors_list[0],self.grid.cells[11][2]))
+            pawns_list.append(Pawn(colors_list[1], self.grid.cells[0][8]))
+            pawns_list.append(Pawn(colors_list[2], self.grid.cells[15][0]))
+            pawns_list.append(Pawn(colors_list[3], self.grid.cells[15][15]))
         return pawns_list
 
     def find_random_cells_starts_for_pawns(self) -> [Cell]:

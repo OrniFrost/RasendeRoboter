@@ -14,10 +14,11 @@ items_list = [
     ("green", "circle"),
     ("green", "square"),
     ("green", "triangle"),
-    ("green", "star")
+    ("green", "star"),
+    ("black", "hole")
 ]
 
 ai_levels = [
     "easy",
-    "hard"
+    "medium"
 ]
