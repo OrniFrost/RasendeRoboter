@@ -20,5 +20,5 @@ items_list = [
 
 ai_levels = [
     "easy",
-    "hard"
+    "medium"
 ]

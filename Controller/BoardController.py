@@ -142,7 +142,7 @@ class BoardController:
             for cell in self.find_random_cells_starts_for_pawns():
                 pawns_list.append(Pawn(colors_list.pop(0), cell))
         else :
-            pawns_list.append(Pawn(colors_list[0],self.grid.cells[9][8]))
+            pawns_list.append(Pawn(colors_list[0],self.grid.cells[11][2]))
             pawns_list.append(Pawn(colors_list[1], self.grid.cells[0][8]))
             pawns_list.append(Pawn(colors_list[2], self.grid.cells[15][0]))
             pawns_list.append(Pawn(colors_list[3], self.grid.cells[15][15]))

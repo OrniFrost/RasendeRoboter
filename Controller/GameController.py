@@ -77,20 +77,21 @@ class GameController:
             #Tirer une cible
             target = self.choose_target()
             # target = ("black","hole")
-            # target = ("red","square")
+            target = ("red","circle")
 
             self.view.actualize_round(round_number, target)
 
             pawns_start_pose : [Pawn] = [Pawn(p.color, p.cell) for p in self.grid.pawns]
 
             #IA searches solution
-            ai_moves : [(Pawn, Cell)] = self.ai_controller.calculate_turn(target)
+            ai_moves : [(Pawn, Cell)] = self.ai_controller.calculate_turn(target, level=self.ai_level)
             if ai_moves is not None:
                 messagebox.showinfo("Information", f"AI found with {len(ai_moves)} moves")
             else:
                 messagebox.showinfo("Information", f"AI didn't find a solution")
 
             # Player plays
+            self.replace_pawns(pawns_start_pose)
             self.view.actualize_turn("Player")
             self.player_controller.make_turn(target)
 
@@ -99,8 +100,7 @@ class GameController:
 
                 self.view.actualize_turn("AI")
                 #Replace pawns
-                for i in range(len(pawns_start_pose)):
-                    self.ai_controller.move_pawn(self.grid.pawns[i], pawns_start_pose[i].cell)
+                self.replace_pawns(pawns_start_pose)
 
                 self.ai_controller.make_turn(ai_moves)
 
@@ -168,3 +168,7 @@ class GameController:
 
         self.remaining_items_list.remove(target)
         return target
+
+    def replace_pawns(self, pawns_start_pose : [Pawn]):
+        for i in range(len(pawns_start_pose)):
+            self.ai_controller.move_pawn(self.grid.pawns[i], pawns_start_pose[i].cell)
