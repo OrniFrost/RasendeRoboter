@@ -29,29 +29,31 @@ class AIController(BaseActionController):
                 cell_target=self.grid.find_cell_of_target(target)
             )
         else:
-            moves = None
             moves_list = []
             for i in range(4):
                 moves_list.append(self.a_star_one_pawn(
                     idx_pawn_target=i,
                     cell_target=self.grid.find_cell_of_target(target)
                 ))
-            if len(moves_list) != 0:
-                moves = moves_list.pop(0)
-                for m in moves_list:
-                    if m is not None:
-                        if len(m) < len(moves):
-                            moves = m
-
+            final_moves = moves_list[0]
+            for m in moves_list:
+                if m is not None:
+                    if final_moves is None:
+                        final_moves = m
+                        continue
+                    if len(m) < len(final_moves):
+                        final_moves = m
+            moves = final_moves
         return moves
 
     def calculate_turn_medium(self, target: (str, str)) -> [(Pawn, Cell)]:
+        moves_list: [[(Pawn, Cell)]] = []
         if target != ("black", "hole"):
-            moves_list: [[(Pawn, Cell)]] = [self.a_star_one_pawn(
+            moves_list.append(self.a_star_one_pawn(
                 idx_pawn_target=self.find_index_pawn_of_target(target),
                 cell_target=self.grid.find_cell_of_target(target)
-            )]
-
+                )
+            )
             for idx_pawn in range(len(self.grid.pawns)):
                 if self.grid.pawns[idx_pawn].color == target[0]:
                     continue
@@ -65,19 +67,39 @@ class AIController(BaseActionController):
                         moves.insert(0,(self.grid.pawns[idx_pawn], cell))
 
                     moves_list.append(moves)
-
-            final_moves: [(Pawn, Cell)] = moves_list[0]
-            for moves in moves_list :
-                if moves is not None:
-                    if final_moves is None:
-                        final_moves = moves
+        else :
+            #Copy initial states of pawns
+            pawns_start_pose: [Pawn] = [Pawn(p.color, p.cell) for p in self.grid.pawns]
+            for i_pawns in range(len(self.grid.pawns)):
+                moves_list.append(self.a_star_one_pawn(i_pawns, self.grid.find_cell_of_target(target)))
+                for j_pawns in range(len(self.grid.pawns)):
+                    if i_pawns == j_pawns:
                         continue
-                    if len(moves) < len(final_moves):
-                        final_moves = moves
+                    # Replace pawns to start pose
+                    for i in range(len(pawns_start_pose)):
+                        self.grid.pawns[i].cell = pawns_start_pose[i].cell
 
-            return final_moves
+                    for cell in self.grid.find_possible_moves(self.grid.pawns[j_pawns], self.grid.pawns):
+                        self.grid.pawns[j_pawns].cell = cell
+                        moves: [(Pawn, Cell)] = self.a_star_one_pawn(
+                            idx_pawn_target=i_pawns,
+                            cell_target=self.grid.find_cell_of_target(target)
+                        )
+                        if moves is not None:
+                            moves.insert(0, (self.grid.pawns[j_pawns], cell))
 
+                        moves_list.append(moves)
 
+        final_moves: [(Pawn, Cell)] = moves_list[0]
+        for moves in moves_list :
+            if moves is not None:
+                if final_moves is None:
+                    final_moves = moves
+                    continue
+                if len(moves) < len(final_moves):
+                    final_moves = moves
+
+        return final_moves
 
     def make_turn(self, moves : [(Pawn, Cell)]):
         self.view.reset_moves_counter()

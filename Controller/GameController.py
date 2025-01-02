@@ -76,8 +76,8 @@ class GameController:
                and self.player_rounds_won < self.number_of_winning_rounds):
             #Tirer une cible
             target = self.choose_target()
-            # target = ("black","hole")
-            target = ("red","circle")
+            target = ("black","hole")
+            # target = ("red","circle")
 
             self.view.actualize_round(round_number, target)
 
