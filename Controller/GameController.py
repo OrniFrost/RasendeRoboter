@@ -76,7 +76,7 @@ class GameController:
                and self.player_rounds_won < self.number_of_winning_rounds):
             #Tirer une cible
             target = self.choose_target()
-            target = ("black","hole")
+            # target = ("black","hole")
             # target = ("red","circle")
 
             self.view.actualize_round(round_number, target)
@@ -132,7 +132,7 @@ class GameController:
 
         self.root.destroy()
 
-    def choose_target(self):
+    def choose_target(self) -> (str,str):
         is_okay = False
         while not is_okay:
             target = random.choice(self.remaining_items_list)
@@ -145,10 +145,11 @@ class GameController:
 
                 cells_not_valid: [Cell] = []
                 cell_of_the_target = self.grid.find_cell_of_target(target)
-                cells_not_valid.append(cell_of_the_target)
-                cells_not_valid.append(self.player_controller.find_possibles_moves(pawn_of_the_target))
 
-                if pawn_of_the_target.cell not in cells_not_valid:
+                cells_not_valid.append(pawn_of_the_target.cell)
+                cells_not_valid = cells_not_valid + self.player_controller.find_possibles_moves(pawn_of_the_target)
+
+                if cell_of_the_target not in cells_not_valid:
                     is_okay = True
                 else :
                     is_okay = False
@@ -157,6 +158,7 @@ class GameController:
                 cells_not_valid: [Cell] = []
 
                 for pawn in self.grid.pawns:
+                    cells_not_valid.append(pawn.cell)
                     for cell in self.player_controller.find_possibles_moves(pawn):
                         if cell_of_the_target == cell:
                             cells_not_valid.append(cell)
