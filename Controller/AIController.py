@@ -164,7 +164,7 @@ class AIController(BaseActionController):
                     is_in_open_list_with_inf_value = same_y.value_g < g_y
 
                 if not (is_in_closed_list or is_in_open_list_with_inf_value): # Condition found on the A*'s wiki
-                    h_y = self.h(p.cell, cell_target)
+                    h_y = self.h_manhattan_distance(p.cell, cell_target)
 
                     f_y = g_y + h_y
 
@@ -193,7 +193,10 @@ class AIController(BaseActionController):
             if self.grid.pawns[i].color == target[0]:
                 return i
 
-    def h(self, cell_1 : Cell, cell_2 : Cell) -> float:
+    def h_euclidian_distance(self, cell_1 : Cell, cell_2 : Cell) -> float:
         return math.sqrt(
             (cell_2.row - cell_1.row)**2 + (cell_2.col - cell_1.col)**2
         )
+
+    def h_manhattan_distance(self, cell_1 : Cell, cell_2 : Cell) -> float:
+        return abs(cell_2.row - cell_1.row) + abs(cell_2.col - cell_1.col)
