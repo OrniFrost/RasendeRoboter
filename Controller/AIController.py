@@ -134,19 +134,20 @@ class AIController(BaseActionController):
         open_list : [Node] = [start_node]
         closed_list : [Node] = []
 
-        while len(open_list) != 0:
+        while len(open_list) != 0: # While open list is not empty
 
-            open_list.sort()
+            open_list.sort() # Sort open_list to have the node with the lowest value_f
 
             n : Node = open_list.pop(0)
 
             closed_list.append(n)
 
-            if n.state[idx_pawn_target].cell == cell_target:
+            if n.state[idx_pawn_target].cell == cell_target: # If this node is the target
                 final_node = n
-                return self.find_travel_to_final_node(final_node, idx_pawn_target)
+                return self.find_travel_to_final_node(final_node, idx_pawn_target) # Reassemble the path to the target
 
             pawn = n.state[idx_pawn_target]
+            # For each cell on which the pawn can move
             for next_cell in self.find_possibles_moves_with_specific_pawns(pawn, n.state):
                 y : Node = Node([Pawn(p.color,p.cell) for p in n.state], n, 0,0)
                 p : Pawn = y.state[idx_pawn_target]
@@ -162,8 +163,7 @@ class AIController(BaseActionController):
                     same_y = open_list[open_list.index(y)]
                     is_in_open_list_with_inf_value = same_y.value_g < g_y
 
-
-                if not (is_in_closed_list or is_in_open_list_with_inf_value):
+                if not (is_in_closed_list or is_in_open_list_with_inf_value): # Condition found on the A*'s wiki
                     h_y = self.h(p.cell, cell_target)
 
                     f_y = g_y + h_y
@@ -173,7 +173,7 @@ class AIController(BaseActionController):
 
                     open_list.append(y)
 
-        return None
+        return None # No path found
 
 
     def find_travel_to_final_node(self, final_node : Node, idx_pawn : int) -> [(Pawn,Cell)]:
